@@ -2,239 +2,150 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Clutch Coverage - NBA & NFL News + Live Scores</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clutch Coverage</title>
   <style>
-    /* Reset */
-    * {
-      box-sizing: border-box;
-    }
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
-      color: #eee;
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    a {
-      color: #1db954;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a0a0a;
+      color: #fff;
     }
 
     header {
-      background: #1a1a1a;
-      padding: 1rem 2rem;
+      background-color: #111;
+      padding: 2rem 1rem;
       text-align: center;
-      border-bottom: 3px solid #1db954;
-      font-weight: 700;
+      border-bottom: 3px solid #00ff91;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 3rem;
+      color: #00ff91;
+    }
+
+    .section {
+      padding: 2rem 1rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section h2 {
+      border-left: 5px solid #00ff91;
+      padding-left: 1rem;
       font-size: 2rem;
-      letter-spacing: 2px;
-      user-select: none;
-    }
-
-    main {
-      flex: 1 0 auto;
-      padding: 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    section {
-      margin-bottom: 3rem;
-    }
-
-    h2 {
-      border-bottom: 2px solid #1db954;
-      padding-bottom: 0.5rem;
       margin-bottom: 1rem;
     }
 
-    /* Live Scores */
-    #live-scores {
-      background: #222;
-      padding: 1rem;
-      border-radius: 8px;
-      min-height: 120px;
-      font-size: 1.1rem;
-    }
-    .game {
-      border-bottom: 1px solid #444;
-      padding: 0.5rem 0;
-      display: flex;
-      justify-content: space-between;
-    }
-    .game:last-child {
-      border-bottom: none;
-    }
-    .team {
-      flex: 1;
-    }
-    .team-name {
-      font-weight: 600;
-    }
-    .score {
-      font-weight: 700;
-      font-size: 1.2rem;
-      min-width: 40px;
-      text-align: center;
-    }
-    .status {
-      font-style: italic;
-      color: #999;
-      text-align: center;
-      margin-top: 0.5rem;
-    }
-
-    /* Articles */
-    #articles {
+    .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1.5rem;
     }
-    .article {
-      background: #1e1e1e;
-      border-radius: 8px;
+
+    .card {
+      background-color: #1a1a1a;
+      border-radius: 10px;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 0.7);
-      transition: transform 0.15s ease-in-out;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 12px rgba(0, 255, 145, 0.1);
     }
-    .article:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 12px rgb(29 185 84 / 0.9);
+
+    .card:hover {
+      transform: translateY(-4px);
     }
-    .article img {
+
+    .card img {
       width: 100%;
       height: 160px;
       object-fit: cover;
     }
-    .article-content {
+
+    .card-content {
       padding: 1rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .article-title {
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin: 0 0 0.5rem 0;
-      flex-grow: 0;
-    }
-    .article-desc {
-      flex-grow: 1;
-      font-size: 0.9rem;
-      color: #ccc;
-      margin-bottom: 1rem;
-    }
-    .article-link {
-      text-align: right;
-      font-weight: 600;
-      color: #1db954;
     }
 
-    /* Newsletter */
-    #newsletter {
-      background: #222;
-      padding: 1.5rem;
-      border-radius: 8px;
+    .card-content h3 {
+      font-size: 1.2rem;
+      margin: 0 0 0.5rem;
+    }
+
+    .card-content p {
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+
+    .newsletter {
+      background-color: #111;
+      padding: 2rem 1rem;
       text-align: center;
     }
-    #newsletter h2 {
-      margin-top: 0;
+
+    .newsletter h2 {
       margin-bottom: 1rem;
+      color: #00ff91;
     }
-    #newsletter form {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    #newsletter input[type="email"] {
-      padding: 0.5rem 1rem;
+
+    .newsletter form input[type="email"] {
+      padding: 0.7rem;
       font-size: 1rem;
-      border-radius: 999px;
+      width: 250px;
+      border-radius: 4px;
       border: none;
-      flex: 1 0 250px;
-      max-width: 350px;
-      outline: none;
+      margin-right: 0.5rem;
     }
-    #newsletter button {
-      background: #1db954;
-      color: #121212;
-      font-weight: 700;
+
+    .newsletter form button {
+      background-color: #00ff91;
       border: none;
-      padding: 0.5rem 1.5rem;
-      border-radius: 999px;
+      padding: 0.7rem 1rem;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    #newsletter button:hover {
-      background: #17a444;
-    }
-    #form-message {
-      margin-top: 0.75rem;
-      color: #1db954;
-      font-weight: 600;
+      border-radius: 4px;
     }
 
     footer {
-      flex-shrink: 0;
-      background: #111;
+      padding: 1rem;
       text-align: center;
-      padding: 1rem 2rem;
+      color: #888;
+      background-color: #0a0a0a;
       font-size: 0.9rem;
-      color: #666;
-      user-select: none;
     }
 
-    @media (max-width: 600px) {
-      main {
-        padding: 1rem;
-      }
-      #articles {
-        grid-template-columns: 1fr;
-      }
-      #newsletter form {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      #newsletter input[type="email"] {
-        max-width: 100%;
-      }
+    .status {
+      font-style: italic;
+      color: #ccc;
+      padding: 1rem;
+      background-color: #222;
+      border-left: 4px solid #00ff91;
     }
   </style>
 </head>
 <body>
+
   <header>
-    Clutch Coverage
+    <h1>Clutch Coverage</h1>
   </header>
-  <main>
-    <section id="live-scores">
-      <h2>Live Scores</h2>
-      <div id="live-scores-content">
-        Loading live scores...
-      </div>
-    </section>
 
-    <section id="articles">
-      <h2>Latest NBA & NFL News</h2>
-      <div id="articles-list">
-        Loading articles...
-      </div>
-    </section>
+  <section class="section">
+    <h2>Live Scores</h2>
+    <div id="live-scores-content" class="status">
+      No NBA or NFL games scheduled for today. Stay tuned for Game 5 of the NBA Finals on June 16!
+    </div>
+  </section>
 
-    <section id="newsletter">
-      <h2>Get the Daily Clutch Newsletter</h2>
-      <!-- MailerLite Embedded Form -->
-      <style type="text/css">@import url("https://assets.mlcdn.com/fonts.css?version=1749122");</style>
+  <section class="section">
+    <h2>Latest NBA & NFL News</h2>
+    <div class="card-grid" id="article-grid">
+      <!-- Articles will go here -->
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <h2>Get the Daily Clutch Newsletter</h2>
+    <!-- Replace form action with your real MailerLite URL -->
+    <style type="text/css">@import url("https://assets.mlcdn.com/fonts.css?version=1749122");</style>
     <style type="text/css">
     /* LOADER */
     .ml-form-embedSubmitLoad {
@@ -1147,82 +1058,78 @@
         <script>
             fetch("https://assets.mailerlite.com/jsonp/1597367/forms/157302743192569712/takel")
         </script>
-      <p id="form-message"></p>
-    </section>
-  </main>
+  </section>
+
   <footer>
     &copy; 2025 Clutch Coverage. All rights reserved.
   </footer>
 
   <script>
-    // Replace XXXXXXXXX with your MailerLite form ID or keep your existing code there.
-    // ======== LIVE SCORES MOCKUP ========
-    const liveScoresContent = document.getElementById('live-scores-content');
-
-    // Since no games today, show a friendly message
-    function showNoGamesMessage() {
-      liveScoresContent.innerHTML = '<p class="status">No NBA or NFL games scheduled for today. Stay tuned for Game 5 of the NBA Finals on June 16!</p>';
-    }
-
-    // For now, just call the no games message (replace this later with real API calls)
-    showNoGamesMessage();
-
-    // ======== NEWSAPI FETCH FOR NBA & NFL NEWS ========
-    const newsApiKey = 'a159e90509894ca28398b5c1b6a03279';
-    const articlesList = document.getElementById('articles-list');
-
-    async function fetchSportsNews() {
-      const url = `https://newsapi.org/v2/everything?` +
-        `q=NBA OR NFL&` +
-        `language=en&` +
-        `sortBy=publishedAt&` +
-        `pageSize=12&` +
-        `apiKey=${newsApiKey}`;
-
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.status !== 'ok') {
-          articlesList.innerHTML = '<p>Failed to load articles.</p>';
-          return;
-        }
-
-        if (data.articles.length === 0) {
-          articlesList.innerHTML = '<p>No recent articles found.</p>';
-          return;
-        }
-
-        articlesList.innerHTML = data.articles.map(article => {
-          const img = article.urlToImage ? article.urlToImage : 'https://via.placeholder.com/400x200?text=No+Image';
-          const desc = article.description ? article.description : '';
-          return `
-            <div class="article">
-              <a href="${article.url}" target="_blank" rel="noopener noreferrer">
-                <img src="${img}" alt="Article Image" />
-                <div class="article-content">
-                  <h3 class="article-title">${article.title}</h3>
-                  <p class="article-desc">${desc}</p>
-                  <span class="article-link">Read More &rarr;</span>
-                </div>
-              </a>
-            </div>
-          `;
-        }).join('');
-
-      } catch (error) {
-        articlesList.innerHTML = '<p>Error loading articles.</p>';
-        console.error('NewsAPI error:', error);
+    // Mocked article data
+    const articles = [
+      {
+        title: "Tatum’s Triple-Double Leads Celtics to 3-1 Series Lead",
+        description: "Jayson Tatum put on a clinic in Game 4, recording a triple-double to push Boston one step closer to a title.",
+        url: "#",
+        image: "https://cdn.nba.com/manage/2024/06/tatum-finals-4.jpg"
+      },
+      {
+        title: "Mahomes Locked In Ahead of Chiefs Training Camp",
+        description: "Patrick Mahomes says the new-look offense is 'scarier than ever' heading into the 2025 NFL season.",
+        url: "#",
+        image: "https://media.cnn.com/api/v1/images/stellar/prod/mahomes-training.jpg"
+      },
+      {
+        title: "Luka & Kyrie: Best Backcourt in Basketball?",
+        description: "The Mavericks' dynamic duo continues to dominate with elite shot creation and spacing.",
+        url: "#",
+        image: "https://cdn.nba.com/manage/2024/05/luka-kyrie-mavs.jpg"
+      },
+      {
+        title: "49ers Eyeing Super Bowl Run with Brock Purdy",
+        description: "Kyle Shanahan praises Purdy’s growth: 'He’s our guy. Period.'",
+        url: "#",
+        image: "https://static.nfl.com/images/purdy-49ers.jpg"
+      },
+      {
+        title: "Can the Knicks Make a Big Offseason Splash?",
+        description: "New York is rumored to be in talks with several All-Stars ahead of free agency.",
+        url: "#",
+        image: "https://cdn.nba.com/manage/2024/06/knicks-offseason.jpg"
+      },
+      {
+        title: "Aaron Rodgers Back at OTAs: 'This Is Our Year'",
+        description: "The Jets QB looks sharp in non-contact drills and is vocal about his Super Bowl aspirations.",
+        url: "#",
+        image: "https://media.nfl.com/rodgers-jets-otas.jpg"
+      },
+      {
+        title: "Celtics Defense Smothering Opponents in Finals",
+        description: "Boston’s historic defensive rating is proving to be the key difference-maker.",
+        url: "#",
+        image: "https://cdn.nba.com/manage/2024/06/celtics-defense.jpg"
+      },
+      {
+        title: "CJ Stroud Poised for MVP Leap?",
+        description: "After a sensational rookie year, the Texans QB is now a serious contender.",
+        url: "#",
+        image: "https://nfl.com/images/cj-stroud-mvp.jpg"
       }
-    }
+    ];
 
-    fetchSportsNews();
-
-    // Optional: Newsletter form message handler
-    const newsletterForm = document.querySelector('#newsletter form');
-    const formMessage = document.getElementById('form-message');
-    newsletterForm.addEventListener('submit', () => {
-      formMessage.textContent = 'Thanks for subscribing! Check your email to confirm.';
+    const container = document.getElementById('article-grid');
+    articles.forEach(article => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${article.image}" alt="${article.title}">
+        <div class="card-content">
+          <h3>${article.title}</h3>
+          <p>${article.description}</p>
+          <a href="${article.url}" target="_blank" style="color: #00ff91; text-decoration: none;">Read more →</a>
+        </div>
+      `;
+      container.appendChild(card);
     });
   </script>
 </body>
