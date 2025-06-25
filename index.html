@@ -5,24 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Clutch Coverage</title>
   <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #fff;
+      --card-bg: #1a1a1a;
+      --accent: #00ff91;
+    }
+
+    body.light {
+      --bg: #f9f9f9;
+      --text: #111;
+      --card-bg: #ffffff;
+      --accent: #007f4f;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #0a0a0a;
-      color: #fff;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
     }
 
     header {
       background-color: #111;
       padding: 2rem 1rem;
       text-align: center;
-      border-bottom: 3px solid #00ff91;
+      border-bottom: 3px solid var(--accent);
     }
 
     header h1 {
       margin: 0;
       font-size: 3rem;
-      color: #00ff91;
+      color: var(--accent);
     }
 
     .section {
@@ -32,10 +47,38 @@
     }
 
     .section h2 {
-      border-left: 5px solid #00ff91;
+      border-left: 5px solid var(--accent);
       padding-left: 1rem;
       font-size: 2rem;
       margin-bottom: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .controls input {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .toggle {
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--accent);
+      background: transparent;
+      border: 2px solid var(--accent);
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
     }
 
     .card-grid {
@@ -45,7 +88,7 @@
     }
 
     .card {
-      background-color: #1a1a1a;
+      background-color: var(--card-bg);
       border-radius: 10px;
       overflow: hidden;
       transition: transform 0.2s;
@@ -84,7 +127,7 @@
 
     .newsletter h2 {
       margin-bottom: 1rem;
-      color: #00ff91;
+      color: var(--accent);
     }
 
     .newsletter form input[type="email"] {
@@ -97,28 +140,43 @@
     }
 
     .newsletter form button {
-      background-color: #00ff91;
+      background-color: var(--accent);
       border: none;
       padding: 0.7rem 1rem;
       font-size: 1rem;
       cursor: pointer;
       border-radius: 4px;
+      color: #000;
+      font-weight: bold;
     }
 
     footer {
       padding: 1rem;
       text-align: center;
       color: #888;
-      background-color: #0a0a0a;
+      background-color: var(--bg);
       font-size: 0.9rem;
     }
 
-    .status {
-      font-style: italic;
-      color: #ccc;
-      padding: 1rem;
-      background-color: #222;
-      border-left: 4px solid #00ff91;
+    @media (max-width: 600px) {
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .newsletter form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .newsletter form input {
+        width: 100%;
+      }
+
+      .newsletter form button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -129,23 +187,17 @@
   </header>
 
   <section class="section">
-    <h2>Live Scores</h2>
-    <div id="live-scores-content" class="status">
-      No NBA or NFL games scheduled for today. Stay tuned for Game 5 of the NBA Finals on June 16!
-    </div>
-  </section>
-
-  <section class="section">
     <h2>Latest NBA & NFL News</h2>
-    <div class="card-grid" id="article-grid">
-      <!-- Articles will go here -->
+    <div class="controls">
+      <input type="text" id="search" placeholder="Search articles..." />
+      <button class="toggle" onclick="toggleMode()">Toggle Theme</button>
     </div>
+    <div class="card-grid" id="article-grid"></div>
   </section>
 
   <section class="newsletter">
     <h2>Get the Daily Clutch Newsletter</h2>
-    <!-- Replace form action with your real MailerLite URL -->
-    <style type="text/css">@import url("https://assets.mlcdn.com/fonts.css?version=1749122");</style>
+    <form action=<style type="text/css">@import url("https://assets.mlcdn.com/fonts.css?version=1749122");</style>
     <style type="text/css">
     /* LOADER */
     .ml-form-embedSubmitLoad {
@@ -1057,15 +1109,22 @@
       <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
         <script>
             fetch("https://assets.mailerlite.com/jsonp/1597367/forms/157302743192569712/takel")
-        </script>
+        </script> method="post" target="_blank">
+      <input type="email" name="email" placeholder="Your email" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <section class="section" style="text-align: center;">
+    <h2>Visitors</h2>
+    <img src="https://visitor-badge.laobi.icu/badge?page_id=clutch.coverage" alt="Visitors">
   </section>
 
   <footer>
-    &copy; 2025 Clutch Coverage. All rights reserved.
+    &copy; 2025 Clutch Coverage. Built for sports fans.
   </footer>
 
   <script>
-    // Mocked article data
     const articles = [
       {
         title: "Tatum’s Triple-Double Leads Celtics to 3-1 Series Lead",
@@ -1117,20 +1176,42 @@
       }
     ];
 
-    const container = document.getElementById('article-grid');
-    articles.forEach(article => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <img src="${article.image}" alt="${article.title}">
-        <div class="card-content">
-          <h3>${article.title}</h3>
-          <p>${article.description}</p>
-          <a href="${article.url}" target="_blank" style="color: #00ff91; text-decoration: none;">Read more →</a>
-        </div>
-      `;
-      container.appendChild(card);
+    const grid = document.getElementById('article-grid');
+    const searchInput = document.getElementById('search');
+
+    function renderArticles(filtered = articles) {
+      grid.innerHTML = '';
+      filtered.forEach(article => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${article.image}" alt="${article.title}">
+          <div class="card-content">
+            <h3>${article.title}</h3>
+            <p>${article.description}</p>
+            <a href="${article.url}" target="_blank" style="color: var(--accent); text-decoration: none;">Read more →</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      const term = searchInput.value.toLowerCase();
+      const filtered = articles.filter(a =>
+        a.title.toLowerCase().includes(term) ||
+        a.description.toLowerCase().includes(term)
+      );
+      renderArticles(filtered);
     });
+
+    function toggleMode() {
+      document.body.classList.toggle('light');
+    }
+
+    // Initial render
+    renderArticles();
   </script>
+
 </body>
 </html>
